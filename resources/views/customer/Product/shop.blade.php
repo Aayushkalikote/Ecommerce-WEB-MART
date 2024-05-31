@@ -41,8 +41,8 @@
                                 @foreach ($brands as $brand)
                                     <p class="card-text m-0 price text-muted">
                                         <input {{ in_array($brand->id, $brandsArray) ? 'checked' : '' }}
-                                            class="form-check-input brand-label" type="checkbox" name="brand[]"
-                                            value="{{ $brand->id }}" id="brand-{{ $brand->id }}">
+                                               class="form-check-input brand-label" type="checkbox" name="brand[]"
+                                               value="{{ $brand->id }}" id="brand-{{ $brand->id }}">
                                         <label class="" for="brand-{{ $brand->id }}">
                                             {{ $brand->name }}
                                         </label>
@@ -57,7 +57,7 @@
                             <hr class="w-50" style="border: 2px solid #2c3662">
                             <div class="card">
                                 <div class="card-body" style="flex: 1;">
-                                    <input type="text" class="js-range-slider" name="my_range" value="" />
+                                    <input type="text" class="js-range-slider" name="my_range" value=""/>
                                 </div>
                             </div>
                         </div>
@@ -72,8 +72,10 @@
                                 <div class="d-flex flex-column align-items-end">
                                     <div class="ml-2 mb-4">
                                         <select class="form-select" name="sort" id="sort">
-                                            <option value="latest" {{ $sort == 'latest' ? 'selected' : '' }}>Latest</option>
-                                            <option value="price_high" {{ $sort == 'price_high' ? 'selected' : '' }}>Price
+                                            <option value="latest" {{ $sort == 'latest' ? 'selected' : '' }}>Latest
+                                            </option>
+                                            <option value="price_high" {{ $sort == 'price_high' ? 'selected' : '' }}>
+                                                Price
                                                 High
                                             </option>
                                             <option value="price_low" {{ $sort == 'price_low' ? 'selected' : '' }}>Price
@@ -90,55 +92,55 @@
                                         <!-- Simple card with a link -->
                                         <a href="{{ route('product.detail', $product->slug) }}" class="card-link">
                                             <div class="card card-product">
-                                            <div class="image-card" style="height: 200px; width: 280px;">
+                                                <div class="image-card" style="height: 200px; width: 280px;">
 
-                                                <img class="card-img-top img-fluid"
-                                                    src="{{ asset('uploads/products/' . $product->image[0]) }}"
-                                                    alt="Card image cap" style="height: 200px; width:300px">
-                                                    </div>
+                                                    <img class="card-img-top img-fluid"
+                                                         src="{{ asset('uploads/products/' . $product->image[0]) }}"
+                                                         alt="Card image cap" style="height: 200px; width:300px">
+                                                </div>
                                                 <div class="card-body">
                                                     <h1 class="card-title mb-2 fs-20">{{ $product->name }}</h1>
                                                     <p class="card-text price">
-                                                        @if ($product->discount)
-                                                            <h5>
+                                                    @if ($product->discount)
+                                                        <h5>
                                                                 <span class="text-danger">
                                                                     Rs.{{ $product->price - ($product->price * $product->discount) / 100 }}
                                                                 </span>
-                                                            </h5>
-                                                            <div class="text-muted">
-                                                                <s>
-                                                                    Rs.{{ $product->price }}
-                                                                </s>
-                                                                ({{ $product->discount }}% off)
-                                                            </div>
-                                                        @else
-                                                            <span class="text-danger">
+                                                        </h5>
+                                                        <div class="text-muted">
+                                                            <s>
+                                                                Rs.{{ $product->price }}
+                                                            </s>
+                                                            ({{ $product->discount }}% off)
+                                                        </div>
+                                                    @else
+                                                        <span class="text-danger">
                                                                 Rs. {{ $product->price ?? ' ' }}
                                                             </span>
                                                         @endif
-                                                    </p>
+                                                        </p>
                                                 </div>
                                                 @if ($product->stock > 0)
                                                     <div class="add-to-cart-btn">
                                                         <a class="btn btn-primary" href="javascript:void(0);"
-                                                            onclick="addToCart({{ $product->id }})"><i
-                                                                class="ri-shopping-cart-2-line fs-18"> Add To Cart </i> </a>
+                                                           onclick="addToCart({{ $product->id }})"><i
+                                                                class="ri-shopping-cart-2-line fs-18"> Add To Cart </i>
+                                                        </a>
                                                     </div>
                                                 @else
                                                     <div class="add-to-cart-btn">
                                                         <a class="btn btn-danger" href="javascript:void(0);"><i
-                                                                class="ri-close-fill fs-18"></i> Out Of Stock </i> </a>
+                                                                class="ri-close-fill fs-18"></i> Out Of Stock </a>
                                                     </div>
                                                 @endif
                                                 <div class="favorite-btn">
                                                     <a onclick="addToWishlist({{ $product->id }})"
-                                                        class="btn btn-outline-danger btn-favorite"><i
+                                                       class="btn btn-outline-danger btn-favorite"><i
                                                             class="ri-heart-line"></i></a>
                                                 </div>
                                             </div><!-- end card -->
                                         </a>
                                     </div><!-- end col -->
-
 
                                 @endif
                             @empty
@@ -160,14 +162,15 @@
         </div>
     </div>
 
-
 @endsection
 @section('script')
+    <!-- range Slider js -->
+    <script src="{{ asset('admin_asset/js/ion.rangeSlider.min.js') }}"></script>
     <script>
-        $(".brand-label").change(function() {
+        $(".brand-label").change(function () {
             apply_filters();
         });
-        $("#sort").change(function() {
+        $("#sort").change(function () {
             apply_filters()
         })
         $(".js-range-slider").ionRangeSlider({
@@ -180,7 +183,7 @@
             skin: "round",
             max_postfix: "+",
             prefix: "Rs. ",
-            onFinish: function() {
+            onFinish: function () {
                 apply_filters()
             }
         });
@@ -188,7 +191,7 @@
 
         function apply_filters() {
             var brands = [];
-            $(".brand-label").each(function() {
+            $(".brand-label").each(function () {
                 if ($(this).is(":checked") == true) {
                     brands.push($(this).val());
                 }
@@ -201,9 +204,9 @@
             url += '&price_min=' + slider.result.from + '&price_max=' + slider.result.to;
 
             //Sorting filter
-            var keyword=$("#search-options").val();
-            if(keyword.length>0){
-                url += '&search=' +keyword;
+            var keyword = $("#search-options").val();
+            if (keyword.length > 0) {
+                url += '&search=' + keyword;
 
             }
             url += '&sort=' + $("#sort").val()

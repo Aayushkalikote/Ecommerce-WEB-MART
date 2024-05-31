@@ -2,20 +2,6 @@
 <!-- JAVASCRIPT -->
  <script src="{{ asset('admin_asset/libs/bootstrap/js/bootstrap.min.js') }}"></script>
 
- <script src="{{ asset('admin_asset/js/pages/plugins/lord-icon-2.1.0.js') }}"></script>
-
-
- <!--Swiper slider js-->
- <script src="{{ asset('admin_asset/libs/swiper/swiper-bundle.min.js') }}"></script>
-
-
-<!-- swiper.init js -->
-<script src="{{ asset('admin_asset/js/pages/swiper.init.js') }}"></script>
- <!-- Dashboard init -->
- <script src="{{ asset('admin_asset/js/pages/ecommerce-product-details.init.js') }}"></script>
-
- <script src="{{ asset('admin_asset/js/pages/ecommerce-product-checkout.init.js') }}"></script>
-
 
 
 <!-- App js -->
@@ -32,10 +18,6 @@
 
 
 
- <!-- Select2 -->
- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
- <!-- range Slider js -->
- <script src="{{ asset('admin_asset/js/ion.rangeSlider.min.js') }}"></script>
 
  <script>
     function addToCart(id) {

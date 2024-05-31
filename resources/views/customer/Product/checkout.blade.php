@@ -418,6 +418,12 @@
 
     </div>
 
+@section('script')
+    <script src="{{ asset('admin_asset/js/pages/plugins/lord-icon-2.1.0.js') }}"></script>
+
+    <!-- Select2 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script src="{{ asset('admin_asset/js/pages/ecommerce-product-checkout.init.js') }}"></script>
 
     {{-- Script for select2 --}}
     <script>

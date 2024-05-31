@@ -531,6 +531,15 @@
     <!-- /.modal -->
 @endsection
 @section('script')
+    <!--Swiper slider js-->
+    <script src="{{ asset('admin_asset/libs/swiper/swiper-bundle.min.js') }}"></script>
+
+
+    <!-- swiper.init js -->
+    <script src="{{ asset('admin_asset/js/pages/swiper.init.js') }}"></script>
+
+    <!-- Product detail js -->
+    <script src="{{ asset('admin_asset/js/pages/ecommerce-product-details.init.js') }}"></script>
     <!-- Script for increment and decrement quantity -->
     <script>
         $(function () {

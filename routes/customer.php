@@ -44,8 +44,11 @@ Route::middleware(['auth:web'])->group(function () {
 });
 
 //--------------------------------------Ends Here--------------------------------------------------------//
+//--------------------------------------Route for Product list--------------------------------------------------------//
+
 Route::get('/shop/{categorySlug?}/{subCategorySlug?}', [ShopController::class, 'index'])->name('lists');
 Route::get('brands/{brandSlug?}', [ShopController::class, 'BrandFilter'])->name('brands.filter');
+//--------------------------------------Ends Here--------------------------------------------------------//
 
 //--------------------------------------Route for Carts--------------------------------------------------------//
 

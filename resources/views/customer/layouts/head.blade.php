@@ -2,8 +2,9 @@
     <meta charset="utf-8" />
     <title>WebMart</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
-    <meta content="Themesbrand" name="author" />
+    <meta content="ecommerce website " name="description" />
+    <meta content="Nepal best ecommerce site" name="description" />
+    <meta content="webmart" name="author" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
 

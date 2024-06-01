@@ -19,7 +19,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $products = Product::where('status', '=', '1')->select(['id', 'name', 'slug', 'price', 'compare_price', 'image','featured','stock'])->get();
+        $products = Product::where('status', '=', '1')->select(['id', 'name', 'slug', 'price', 'compare_price','discount', 'image','featured','stock'])->get();
         $latestProducts = $products->take(4); // No need for separate query
         $brands = Brand::where('status', 1)->select(['id','name','image','slug'])->get();
         $banners = Banner::where('status', 1)->get(['id', 'image']); // Fetch only 'id' and 'image' columns
@@ -27,7 +27,7 @@ class HomeController extends Controller
     }
     public function addToWishlist(Request $request)
     {
-        if (Auth::check() == false) {
+        if (!Auth::check()) {
             session(['url.intended' => url()->previous()]);
             return response()->json([
                 'status' => false
@@ -76,7 +76,7 @@ class HomeController extends Controller
             'email'=> $request->email,
             'subject'=> $request->subject,
             'message'=> $request->message,
-            'url'=>'http://127.0.0.1:8000/',
+            'url'=>url('/'),
             'mail_subject'=>'You have received a contact mail',
         ];
         $admin=User::where('id',1)->first();

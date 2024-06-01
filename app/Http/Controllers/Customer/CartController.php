@@ -62,6 +62,7 @@ class CartController extends Controller
 
             if ($productAlreadyExist == false) {
                 Cart::add($product->id, $product->name, 1, $price, [
+                    'slug' => $product->slug,
                     'image' => (!empty($product->image[0])) ? $product->image[0] : '',
                     'stock' => $product->stock,
                 ]);
@@ -75,6 +76,7 @@ class CartController extends Controller
         } else {
             // Cart is empty
             Cart::add($product->id, $product->name, 1, $price, [
+                'slug' => $product->slug,
                 'image' => (!empty($product->image[0])) ? $product->image[0] : '',
             ]);
             $status = true;

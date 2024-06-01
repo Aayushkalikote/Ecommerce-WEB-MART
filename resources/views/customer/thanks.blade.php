@@ -21,3 +21,6 @@
 </div>
 
 @endsection
+@section('script')
+    <script src="{{ asset('admin_asset/js/pages/plugins/lord-icon-2.1.0.js') }}"></script>
+@endsection

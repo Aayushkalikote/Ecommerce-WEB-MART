@@ -1,4 +1,60 @@
 @extends('customer.layouts.app')
+@section('css')
+<style>
+    .rating {
+            direction: rtl;
+            unicode-bidi: bidi-override;
+            color: #ddd;
+            /* Personal choice */
+            font-size: 8px;
+            margin-left: -15px;
+        }
+
+        .rating input {
+            display: none;
+        }
+
+        .rating label:hover,
+        .rating label:hover~label,
+        .rating input:checked+label,
+        .rating input:checked+label~label {
+            color: #ffc107;
+            /* Personal color choice. Lifted from Bootstrap 4 */
+            font-size: 8px;
+        }
+
+
+        .front-stars,
+        .back-stars,
+        .star-rating {
+            display: flex;
+        }
+
+        .star-rating {
+            align-items: left;
+            font-size: 1.5em;
+            justify-content: left;
+            margin-left: -5px;
+        }
+
+        .back-stars {
+            color: #CCC;
+            position: relative;
+        }
+
+        .front-stars {
+            color: #FFBC0B;
+            overflow: hidden;
+            position: absolute;
+            top: 0;
+            transition: all 0.5s;
+        }
+
+</style>
+    {{--        Swiper slider css --}}
+    <link href="{{ asset('admin_asset/libs/swiper/swiper-bundle.min.css') }}" rel="stylesheet" type="text/css"/>
+
+@endsection
 
 @section('container')
     <div class="main-content">
@@ -74,7 +130,7 @@
                                                 @role(['Admin', 'Super Admin'])
                                                 <div class="flex-shrink-0">
                                                     <div>
-                                                        <a href="apps-ecommerce-add-product.html" class="btn btn-light"
+                                                        <a href="#" class="btn btn-light"
                                                            data-bs-toggle="tooltip" data-bs-placement="top"
                                                            title="Edit"><i class="ri-pencil-fill align-bottom"></i></a>
                                                     </div>
@@ -120,20 +176,20 @@
                                                             </div>
                                                         </div>
                                                         <div class="flex-grow-1">
-                                                            <p class="mb-1  fs-16 price">Price:
-                                                            @if ($product->price)
-                                                                {{ $product->price }}
-                                                                <div>
-                                                                    <s class="text-muted">
-                                                                        {{ $product->compare_price }}
-                                                                    </s>
-                                                                    <span class="text-danger price">
+                                                            <div class="mb-1  fs-16 price">Price:
+                                                                @if ($product->price)
+                                                                    {{ $product->price }}
+                                                                    <div>
+                                                                        <s class="text-muted">
+                                                                            {{ $product->compare_price }}
+                                                                        </s>
+                                                                        <span class="text-danger price">
                                                                             ({{ $product->discount }}% off)</span>
-                                                                </div>
+                                                                    </div>
                                                                 @else
                                                                     {{ $product->compare_price ?? ' ' }}
                                                                 @endif
-                                                                </p>
+                                                            </div>
 
                                                         </div>
 
@@ -179,9 +235,9 @@
                                                 <div class="row">
                                                     <button type="submit" class="btn btn-info btn-lg btn-block me-3"
                                                             id="save-Category" style="width: 260px;">
-                                                         <a href="{{ route('checkout.details') }}">
+                                                        <a href="{{ route('checkout.details') }}" style="text-decoration: none; color: inherit;">
                                                             Buy Now
-                                                            </a>
+                                                        </a>
                                                     </button>
                                                     @if ($product->stock > 0)
                                                         <button type="submit" class="btn btn-danger btn-lg btn-block"
@@ -453,8 +509,6 @@
 
                                                 </div>
                                             </div>
-
-
                                         </div>
                                         <!-- product-content -->
 
@@ -476,7 +530,6 @@
         <!-- container-fluid -->
     </div>
     <!-- End Page-content -->
-    </div>
     <!-- CartErrorModal -->
     <div id="cartErrorModal" class="modal fade zoomIn" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -487,9 +540,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="mt-2 text-center">
-                        <lord-icon src="https://cdn.lordicon.com/usownftb.json" trigger="loop"
-                                   style="width:100px;height:100px; ">
-                        </lord-icon>
+                    <i class="ri-error-warning-fill fs-36"></i>
+
                         <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
                             <h4 class="text-danger">Your Product is already added in cart!</h4>
                         </div>
@@ -528,9 +580,19 @@
             <!-- /.modal-dialog -->
         </div>
     </div>
-    <!-- /.modal -->
 @endsection
+
+<!-- /.modal -->
 @section('script')
+
+    <!--Swiper slider js-->
+    <script src="{{ asset('admin_asset/libs/swiper/swiper-bundle.min.js') }}"></script>
+
+    <!-- swiper.init js -->
+    <script src="{{ asset('admin_asset/js/pages/swiper.init.js') }}"></script>
+
+    <!-- Product detail js -->
+    <script src="{{ asset('admin_asset/js/pages/ecommerce-product-details.init.js') }}"></script>
     <!-- Script for increment and decrement quantity -->
     <script>
         $(function () {
@@ -581,11 +643,11 @@
                     processData: false,
                     contentType: false,
                     success: function (response) {
-                        if (response.status == true) {
+                        if (response.status === true) {
                             localStorage.setItem("successMessage", response.message);
                             window.location.reload();
                         }
-                        if (response.status == false) {
+                        if (response.status === false) {
                             localStorage.setItem("errorMessage", response.message);
                             window.location.reload();
                         }

@@ -31,7 +31,7 @@
                                             @elseif($order->status == 'shipped')
                                                 <span class="badge bg-info">Shipped</span>
                                             @else
-                                                <span class="badge bg-success">Status</span>
+                                                <span class="badge bg-success">Delivered</span>
                                             @endif
                                         </td>
                                         <td>Rs. {{ number_format($order->grand_total, 2) }}</td>

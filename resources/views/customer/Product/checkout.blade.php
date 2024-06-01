@@ -1,4 +1,12 @@
 @extends('customer.layouts.app')
+@section('css')
+    <!-- Custom Card For Product - -->
+    <link href="{{ asset('admin_asset/css/product-card.css') }}" rel="stylesheet" type="text/css" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
+        integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+@endsection
 @section('container')
     <div class="main-content overflow-hidden">
 
@@ -255,7 +263,8 @@
                                             <div class="collapse show" id="paymentmethodCollapse">
                                                 <div class="card p-4 border shadow-none mb-0 mt-4">
                                                     <div class="row gy-3">
-                                                       <span class="text-danger text-center fs-14" id="payment_message_vald"></span>
+                                                        <span class="text-danger text-center fs-14"
+                                                              id="payment_message_vald"></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -279,6 +288,7 @@
                                              aria-labelledby="pills-finish-tab">
                                             <div class="text-center py-5">
                                                 <div class="mb-4">
+
                                                     <lord-icon src="https://cdn.lordicon.com/lupuorrc.json"
                                                                trigger="loop"
                                                                colors="primary:#0ab39c,secondary:#405189"
@@ -417,280 +427,281 @@
 
 
     </div>
+@endsection
+    @section('script')
+        <script src="{{ asset('admin_asset/js/pages/ecommerce-product-checkout.init.js') }}"></script>
 
-@section('script')
-    <script src="{{ asset('admin_asset/js/pages/plugins/lord-icon-2.1.0.js') }}"></script>
+        <script src="{{ asset('admin_asset/js/pages/plugins/lord-icon-2.1.0.js') }}"></script>
 
-    <!-- Select2 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-    <script src="{{ asset('admin_asset/js/pages/ecommerce-product-checkout.init.js') }}"></script>
+        <!-- Select2 -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
-    {{-- Script for select2 --}}
-    <script>
-        $(document).ready(function () {
-            $('.js-example-basic-single-Province-city').select2({});
-        });
-    </script>
+        {{-- Script for select2 --}}
+        <script>
+            $(document).ready(function () {
+                $('.js-example-basic-single-Province-city').select2({});
+            });
+        </script>
 
-    {{-- Dynamic Dropdown for Province and City --}}
-    <script>
-        $(document).ready(function () {
+        {{-- Dynamic Dropdown for Province and City --}}
+        <script>
+            $(document).ready(function () {
 
-            $('#province_id').change(function () {
-                var provinceId = $(this).val();
-                if (provinceId) {
-                    var url = "{{ route('cities.get', ['id' => ':id']) }}";
-                    var urlWithId = url.replace(':id', provinceId);
+                $('#province_id').change(function () {
+                    var provinceId = $(this).val();
+                    if (provinceId) {
+                        var url = "{{ route('cities.get', ['id' => ':id']) }}";
+                        var urlWithId = url.replace(':id', provinceId);
+                        $.ajax({
+                            type: "GET",
+                            url: urlWithId,
+                            success: function (res) {
+                                if (res) {
+                                    $("#cities_id").empty();
+                                    $("#cities_id").append(
+                                        '<option value="">Select City/Municipality...</option>');
+                                    $.each(res, function (key, value) {
+                                        $("#cities_id").append('<option value="' +
+                                            value.id + '">' + value.name +
+                                            '</option>');
+                                    });
+                                    $('#cities_id').prop('disabled', false);
+                                } else {
+                                    $("#cities_id").empty();
+                                    $('#cities_id').prop('disabled', true);
+                                }
+                            }
+                        });
+                    } else {
+                        $("#cities_id").empty();
+                        $('#cities_id').prop('disabled', true);
+                    }
+                });
+            });
+        </script>
+
+
+        {{-- Address customer Form  and Payment Detail --}}
+        <script>
+            $(document).ready(function () {
+                $('#save-information').click(function (e) {
+                    var data = $('#Billing-information-form').serializeArray();
                     $.ajax({
-                        type: "GET",
-                        url: urlWithId,
-                        success: function (res) {
-                            if (res) {
-                                $("#cities_id").empty();
-                                $("#cities_id").append(
-                                    '<option value="">Select City/Municipality...</option>');
-                                $.each(res, function (key, value) {
-                                    $("#cities_id").append('<option value="' +
-                                        value.id + '">' + value.name +
-                                        '</option>');
-                                });
-                                $('#cities_id').prop('disabled', false);
-                            } else {
-                                $("#cities_id").empty();
-                                $('#cities_id').prop('disabled', true);
+                        type: 'POST',
+                        url: "{{ route('process.checkout.address') }}",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: data,
+                        success: function (response) {
+                            console.log("finally");
+                            showToast(response.message);
+                            // Switch to the next tab
+                            if (!response.errors) {
+                                $('#pills-payment-tab').removeAttr('disabled');
+                                $('#pills-payment-tab').tab('show');
+                            }
+                        },
+                        error: function (error) {
+                            document.getElementById('FullNameError').style.display = "none";
+                            document.getElementById('EmailError').style.display = "none";
+                            document.getElementById('ProvinceError').style.display = "none";
+                            document.getElementById('CityError').style.display = "none";
+                            document.getElementById('mobileError').style.display = "none";
+                            document.getElementById('addressError').style.display = "none";
+                            if (error.responseJSON.errors) {
+                                if (error.responseJSON.errors.full_name) {
+                                    var errMsg = document.getElementById('FullNameError');
+                                    if (error.responseJSON.errors.full_name[0]) {
+                                        errMsg.style.display = "block";
+                                        errMsg.textContent = error.responseJSON.errors.full_name[0];
+                                    }
+                                }
+                                if (error.responseJSON.errors.email) {
+                                    var errMsg = document.getElementById('EmailError');
+                                    if (error.responseJSON.errors.email[0]) {
+                                        errMsg.style.display = "block";
+                                        errMsg.textContent = error.responseJSON.errors.email[
+                                            0];
+                                    }
+                                }
+                                if (error.responseJSON.errors.province_id) {
+                                    var errMsg = document.getElementById('ProvinceError');
+                                    if (error.responseJSON.errors.province_id[0]) {
+                                        errMsg.style.display = "block";
+                                        errMsg.textContent = error.responseJSON.errors.province_id[
+                                            0];
+                                    }
+                                }
+                                if (error.responseJSON.errors.city_id) {
+                                    var errMsg = document.getElementById('CityError');
+                                    if (error.responseJSON.errors.city_id[0]) {
+                                        errMsg.style.display = "block";
+                                        errMsg.textContent = error.responseJSON.errors.city_id[0];
+                                    }
+                                }
+                                if (error.responseJSON.errors.phone) {
+                                    var errMsg = document.getElementById('mobileError');
+                                    if (error.responseJSON.errors.phone[0]) {
+                                        errMsg.style.display = "block";
+                                        errMsg.textContent = error.responseJSON.errors.phone[0];
+                                    }
+                                }
+                                if (error.responseJSON.errors.address) {
+                                    var errMsg = document.getElementById('addressError');
+                                    if (error.responseJSON.errors.address[0]) {
+                                        errMsg.style.display = "block";
+                                        errMsg.textContent = error.responseJSON.errors.address[0];
+                                    }
+                                }
+
                             }
                         }
                     });
-                } else {
-                    $("#cities_id").empty();
-                    $('#cities_id').prop('disabled', true);
-                }
+                });
+
             });
-        });
-    </script>
+        </script>
 
 
-    {{-- Address customer Form  and Payment Detail --}}
-    <script>
-        $(document).ready(function () {
-            $('#save-information').click(function (e) {
-                var data = $('#Billing-information-form').serializeArray();
-                $.ajax({
-                    type: 'POST',
-                    url: "{{ route('process.checkout.address') }}",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data: data,
-                    success: function (response) {
-                        console.log("finally");
-                        showToast(response.message);
-                        // Switch to the next tab
-                        if (!response.errors) {
-                            $('#pills-payment-tab').removeAttr('disabled');
-                            $('#pills-payment-tab').tab('show');
-                        }
-                    },
-                    error: function (error) {
-                        document.getElementById('FullNameError').style.display = "none";
-                        document.getElementById('EmailError').style.display = "none";
-                        document.getElementById('ProvinceError').style.display = "none";
-                        document.getElementById('CityError').style.display = "none";
-                        document.getElementById('mobileError').style.display = "none";
-                        document.getElementById('addressError').style.display = "none";
-                        if (error.responseJSON.errors) {
-                            if (error.responseJSON.errors.full_name) {
-                                var errMsg = document.getElementById('FullNameError');
-                                if (error.responseJSON.errors.full_name[0]) {
-                                    errMsg.style.display = "block";
-                                    errMsg.textContent = error.responseJSON.errors.full_name[0];
-                                }
+        <script>
+            $(document).ready(function () {
+                $('#order_complete').click(function (e) {
+                    var data = $('#Billing-information-form').serializeArray();
+                    $.ajax({
+                        type: 'POST',
+                        url: "{{ route('process.checkout.payment') }}",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: data,
+                        success: function (response) {
+                            $('#order_complete').prop('disabled', true);
+                            if (response.status == true && response.type == 'esewa') {
+                                window.location.href = response.url;
                             }
-                            if (error.responseJSON.errors.email) {
-                                var errMsg = document.getElementById('EmailError');
-                                if (error.responseJSON.errors.email[0]) {
-                                    errMsg.style.display = "block";
-                                    errMsg.textContent = error.responseJSON.errors.email[
-                                        0];
-                                }
+                            showToast(response.message);
+
+                            // Switch to the next tab
+                            if (!response.errors && response.status == true && response.type == 'cod') {
+                                $('#coupon-div').hide();
+                                $('#pills-finish-tab').removeAttr('disabled');
+                                $('#pills-finish-tab').tab('show');
+                                $('#orderID').text(response.order_id);
+                                $('#pills-payment-tab').prop('disabled', true);
+                                $('#pills-bill-info-tab').prop('disabled', true);
+                                $("#discount-response-wrapper").html('');
+                                $("#discount_code").val('');
                             }
-                            if (error.responseJSON.errors.province_id) {
-                                var errMsg = document.getElementById('ProvinceError');
-                                if (error.responseJSON.errors.province_id[0]) {
-                                    errMsg.style.display = "block";
-                                    errMsg.textContent = error.responseJSON.errors.province_id[
-                                        0];
-                                }
+                            if (!response.errors && response.status == false) {
+                                $('#order_complete').prop('disabled', false);
+
+                                $('#payment_message_vald').html(response.message);
                             }
-                            if (error.responseJSON.errors.city_id) {
-                                var errMsg = document.getElementById('CityError');
-                                if (error.responseJSON.errors.city_id[0]) {
-                                    errMsg.style.display = "block";
-                                    errMsg.textContent = error.responseJSON.errors.city_id[0];
-                                }
-                            }
-                            if (error.responseJSON.errors.phone) {
-                                var errMsg = document.getElementById('mobileError');
-                                if (error.responseJSON.errors.phone[0]) {
-                                    errMsg.style.display = "block";
-                                    errMsg.textContent = error.responseJSON.errors.phone[0];
-                                }
-                            }
-                            if (error.responseJSON.errors.address) {
-                                var errMsg = document.getElementById('addressError');
-                                if (error.responseJSON.errors.address[0]) {
-                                    errMsg.style.display = "block";
-                                    errMsg.textContent = error.responseJSON.errors.address[0];
-                                }
-                            }
+                        },
+                        error: function (error) {
 
                         }
-                    }
+                    });
                 });
             });
-
-        });
-    </script>
+        </script>
 
 
-    <script>
-        $(document).ready(function () {
-            $('#order_complete').click(function (e) {
-                var data = $('#Billing-information-form').serializeArray();
-                $.ajax({
-                    type: 'POST',
-                    url: "{{ route('process.checkout.payment') }}",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data: data,
-                    success: function (response) {
-                        $('#order_complete').prop('disabled', true);
-                        if (response.status==true && response.type == 'esewa') {
-                            window.location.href = response.url;
+
+
+
+
+        {{-- Shipping charge change Script --}}
+        <script>
+            $(document).ready(function () {
+                $('#cities_id').change(function () {
+
+                    $.ajax({
+                        url: "{{ route('order.summary') }}",
+                        type: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {
+                            cities_id: $(this).val()
+                        },
+                        dataType: 'json',
+                        success: function (response) {
+                            if (response.status == true) {
+                                console.log('here');
+                                $("#shippingAmount").html('Rs ' + response.shippingCharge);
+                                $("#grandTotal").html('Rs ' + response.grandTotal);
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(error);
                         }
-                        showToast(response.message);
-
-                        // Switch to the next tab
-                        if (!response.errors && response.status == true && response.type == 'cod') {
-                            $('#coupon-div').hide();
-                            $('#pills-finish-tab').removeAttr('disabled');
-                            $('#pills-finish-tab').tab('show');
-                            $('#orderID').text(response.order_id);
-                            $('#pills-payment-tab').prop('disabled', true);
-                            $('#pills-bill-info-tab').prop('disabled', true);
-                            $("#discount-response-wrapper").html('');
-                            $("#discount_code").val('');
-                        }
-                        if (!response.errors && response.status == false) {
-                            $('#order_complete').prop('disabled', false);
-
-                            $('#payment_message_vald').html(response.message);
-                        }
-                    },
-                    error: function (error) {
-
-                    }
+                    });
                 });
             });
-        });
-    </script>
+        </script>
 
 
 
-
-
-
-    {{-- Shipping charge change Script --}}
-    <script>
-        $(document).ready(function () {
-            $('#cities_id').change(function () {
-
-                $.ajax({
-                    url: "{{ route('order.summary') }}",
-                    type: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data: {
-                        cities_id: $(this).val()
-                    },
-                    dataType: 'json',
-                    success: function (response) {
-                        if (response.status == true) {
-                            console.log('here');
-                            $("#shippingAmount").html('Rs ' + response.shippingCharge);
-                            $("#grandTotal").html('Rs ' + response.grandTotal);
+        {{-- script for discount coupon --}}
+        <script>
+            $(document).ready(function () {
+                $("#apply-discount").click(function (e) {
+                    console.log('clicked');
+                    $.ajax({
+                        type: 'POST',
+                        url: "{{ route('discountcode') }}",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {
+                            code: $("#discount_code").val(),
+                            cities_id: $("#cities_id").val()
+                        },
+                        success: function (response) {
+                            if (response.status == true) {
+                                showToast('Discount Coupon added succesfully');
+                                $("#shippingAmount").html('Rs ' + response.shippingCharge);
+                                $("#grandTotal").html('Rs ' + response.grandTotal);
+                                $("#discount_value").html('-Rs ' + response.discount);
+                                $("#discount-response-wrapper").html(response.discountString);
+                            }
+                            if (response.status == false) {
+                                showErrorToast(response.message);
+                            }
                         }
-                    },
-                    error: function (xhr, status, error) {
-                        console.error(error);
-                    }
+                    });
                 });
             });
-        });
-    </script>
-
-
-
-    {{-- script for discount coupon --}}
-    <script>
-        $(document).ready(function () {
-            $("#apply-discount").click(function (e) {
-                console.log('clicked');
-                $.ajax({
-                    type: 'POST',
-                    url: "{{ route('discountcode') }}",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data: {
-                        code: $("#discount_code").val(),
-                        cities_id: $("#cities_id").val()
-                    },
-                    success: function (response) {
-                        if (response.status == true) {
-                            showToast('Discount Coupon added succesfully');
-                            $("#shippingAmount").html('Rs ' + response.shippingCharge);
-                            $("#grandTotal").html('Rs ' + response.grandTotal);
-                            $("#discount_value").html('-Rs ' + response.discount);
-                            $("#discount-response-wrapper").html(response.discountString);
+            $(document).ready(function () {
+                $('body').on('click', "#delete-coupon-code", function () {
+                    $.ajax({
+                        type: 'POST',
+                        url: "{{ route('remove.discountcode') }}",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {
+                            cities_id: $("#cities_id").val()
+                        },
+                        success: function (response) {
+                            if (response.status == true) {
+                                showToast('Discount coupon Removed Succesfully');
+                                $("#shippingAmount").html('Rs ' + response
+                                    .shippingCharge);
+                                $("#grandTotal").html('Rs ' + response.grandTotal);
+                                $("#discount_value").html('-Rs ' + response.discount);
+                                $("#discount-response-wrapper").html('');
+                                $("#discount_code").val('');
+                            }
+                            if (response.status == false) {
+                                showErrorToast(response.message);
+                            }
                         }
-                        if (response.status == false) {
-                            showErrorToast(response.message);
-                        }
-                    }
-                });
+                    });
+                })
+
             });
-        });
-        $(document).ready(function () {
-            $('body').on('click', "#delete-coupon-code", function () {
-                $.ajax({
-                    type: 'POST',
-                    url: "{{ route('remove.discountcode') }}",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data: {
-                        cities_id: $("#cities_id").val()
-                    },
-                    success: function (response) {
-                        if (response.status == true) {
-                            showToast('Discount coupon Removed Succesfully');
-                            $("#shippingAmount").html('Rs ' + response
-                                .shippingCharge);
-                            $("#grandTotal").html('Rs ' + response.grandTotal);
-                            $("#discount_value").html('-Rs ' + response.discount);
-                            $("#discount-response-wrapper").html('');
-                            $("#discount_code").val('');
-                        }
-                        if (response.status == false) {
-                            showErrorToast(response.message);
-                        }
-                    }
-                });
-            })
-
-        });
-    </script>
-@endsection
+        </script>
+    @endsection

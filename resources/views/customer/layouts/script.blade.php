@@ -2,21 +2,13 @@
 <!-- JAVASCRIPT -->
  <script src="{{ asset('admin_asset/libs/bootstrap/js/bootstrap.min.js') }}"></script>
 
-
-
 <!-- App js -->
  <script src="{{ asset('admin_asset/js/app.js') }}"></script>
-
-
-
-
  <!-- include jQuery library -->
  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
 
 
  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-
-
 
 
  <script>
@@ -34,9 +26,7 @@
                     localStorage.setItem("successMessage", response.message);
                     window.location.href="{{ route('carts.details') }}"
                 }else{
-                    alert('Your Product already added');
                     $('#cartErrorModal').modal('show');
-
                 }
             },
 

@@ -116,7 +116,7 @@
                     <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
                             id="page-header-cart-dropdown" data-bs-toggle="dropdown" data-bs-auto-close="outside"
                             aria-haspopup="true" aria-expanded="false">
-                        <i class='bx bx-shopping-bag fs-22'></i>
+                        <i class="ri-shopping-bag-line fs-22"></i>
                         <span
                             class="position-absolute topbar-badge cartitem-badge fs-10 translate-middle badge rounded-pill bg-info">5</span>
                     </button>
@@ -140,7 +140,6 @@
                                     @foreach (Cart::content() as $item)
                                         @php
                                             $subtotal = $item->qty * $item->price;
-
                                         @endphp
                                         <div class="d-block dropdown-item dropdown-item-cart text-wrap px-3 py-2">
                                             <div class="d-flex align-items-center">
@@ -149,7 +148,7 @@
                                                     class="me-3 rounded-circle avatar-sm p-2 bg-light" alt="user-pic">
                                                 <div class="flex-1">
                                                     <h6 class="mt-0 mb-1 fs-14">
-                                                        <a href="#"
+                                                        <a href="{{ route('product.detail', $item->options->slug) }}"
                                                            class="text-reset">{{ $item->name }}</a>
                                                     </h6>
                                                     <p class="mb-0 fs-12 text-muted">
@@ -164,8 +163,8 @@
                                                     <a href="#" onclick="deleteItem('{{ $item->rowId }}')">
                                                         <button type="button"
                                                                 class="btn btn-icon btn-sm btn-ghost-secondary remove-item-btn">
-                                                            <i
-                                                                class="ri-close-fill fs-16"></i></button>
+                                                            <i class="ri-close-fill fs-16"></i>
+                                                        </button>
                                                     </a>
                                                 </div>
                                             </div>
@@ -188,7 +187,7 @@
                                     <div class="text-center">
                                         <div class="avatar-md mx-auto my-3">
                                             <div class="avatar-title bg-soft-info text-info fs-36 rounded-circle">
-                                                <i class='bx bx-cart'></i>
+                                                <i class="ri-shopping-bag-line"></i>
                                             </div>
                                         </div>
                                         <h5 class="mb-3">Your Cart is Empty!</h5>
@@ -207,14 +206,14 @@
                     <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
                             data-toggle="fullscreen" data-bs-toggle="tooltip" data-bs-placement="bottom"
                             title="FullScreen">
-                        <i class='bx bx-fullscreen fs-22'></i>
+                        <i class="ri-fullscreen-line fs-22"></i>
                     </button>
                 </div>
 
                 <div class="ms-1 header-item d-none d-sm-flex">
                     <button type="button"
                             class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle light-dark-mode">
-                        <i class='bx bx-moon fs-22'></i>
+                        <i class="ri-moon-fill fs-22"></i>
                     </button>
                 </div>
 
@@ -268,7 +267,8 @@
                     </div>
                 @else
                     <div class="ms-1 header-item d-none d-sm-flex">
-                        <a href="{{ route('login') }}" class="btn btn-icon btn-topbar btn-ghost-secondary border-end"
+                        <a href="{{ route('login') }}"
+                           class="btn btn-icon btn-topbar btn-ghost-secondary border-end"
                            data-bs-toggle="tooltip" data-bs-placement="bottom" title="Log In">
                             <i class="ri-user-3-line fs-22"></i>
                         </a>
@@ -337,7 +337,8 @@
                         $firstCategory = $categories[0];
                     @endphp
                     <li class="nav-item ms-2">
-                        <a href="{{ route('lists', [$firstCategory->category_slug]) }}" data-bs-toggle="collapse" role="button" aria-expanded="false"
+                        <a href="{{ route('lists', [$firstCategory->category_slug]) }}" data-bs-toggle="collapse"
+                           role="button" aria-expanded="false"
                            class="d-flex align-items-center">
                             <span data-key="t-layouts" style="color: white;">{{ $firstCategory->category_name }}</span>
                             <i class="ri-arrow-down-s-fill fs-22" style="color: white;"></i>

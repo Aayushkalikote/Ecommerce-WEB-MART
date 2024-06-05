@@ -1,6 +1,6 @@
 ## Project Setup
 Follow these steps to set up the project:
-1.	Install Composer Dependencies:
+1.	Install Composer Dependencies: <br>
         - Open a terminal and run " composer install ".
 2.	Create .env File:
         - Create a new file named .env in the project directory.

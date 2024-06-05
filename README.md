@@ -1,3 +1,23 @@
+## Project Setup
+Follow these steps to set up the project:
+1.	Install Composer Dependencies:
+        - Open a terminal and run " composer install ".
+2.	Create .env File:
+        - Create a new file named .env in the project directory.
+        - Copy the contents of .env.example into the newly created .env file.
+3.	Configure Database:
+        - Ensure the database settings in your .env file are correctly configured to match your environment.
+        - Create the database using the details specified in the .env file.
+5.	Run Migrations with Seeders:
+        - Run " php artisan migrate --seed " to create tables and seed initial data.
+7.	Generate a Unique Application Key:
+        - Run " php artisan key:generate " to create a unique application key.
+9.	Run Servers:
+        - Run " php artisan serve " to start the server.
+You're all set! The project is now ready to go.
+
+  
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">

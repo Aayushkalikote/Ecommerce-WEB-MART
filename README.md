@@ -2,18 +2,18 @@
 Follow these steps to set up the project:
 1.	Install Composer Dependencies: <br>
         - Open a terminal and run " composer install ".
-2.	Create .env File:
-        - Create a new file named .env in the project directory.
-        - Copy the contents of .env.example into the newly created .env file.
-3.	Configure Database:
-        - Ensure the database settings in your .env file are correctly configured to match your environment.
-        - Create the database using the details specified in the .env file.
-5.	Run Migrations with Seeders:
-        - Run " php artisan migrate --seed " to create tables and seed initial data.
-7.	Generate a Unique Application Key:
-        - Run " php artisan key:generate " to create a unique application key.
-9.	Run Servers:
-        - Run " php artisan serve " to start the server.
+2.	Create .env File: <br>
+        - Create a new file named .env in the project directory. <br>
+        - Copy the contents of .env.example into the newly created .env file.<br>
+3.	Configure Database:<br>
+        - Ensure the database settings in your .env file are correctly configured to match your environment.<br>
+        - Create the database using the details specified in the .env file.<br>
+5.	Run Migrations with Seeders:<br>
+        - Run " php artisan migrate --seed " to create tables and seed initial data.<br>
+7.	Generate a Unique Application Key:<br>
+        - Run " php artisan key:generate " to create a unique application key.<br>
+9.	Run Servers:<br>
+        - Run " php artisan serve " to start the server.<br>
 You're all set! The project is now ready to go.
 
   

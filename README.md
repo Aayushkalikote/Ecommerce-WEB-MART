@@ -1,4 +1,4 @@
-<h1 align="center">Project Setup</h1>
+##Project Setup
 Follow these steps to set up the project:
 1.	Install Composer Dependencies: <br>
         - Open a terminal and run " composer install ".

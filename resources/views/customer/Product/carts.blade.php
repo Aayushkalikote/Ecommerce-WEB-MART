@@ -61,7 +61,7 @@
                                             </div>
                                             <div class="col-sm">
                                                 <h5 class="fs-14 text-truncate">
-                                                    <a href="ecommerce-product-detail.html"
+                                                    <a href="{{ route('product.detail', $item->options->slug) }}"
                                                         class="text-dark">{{ $item->name }}
                                                     </a>
                                                 </h5>
@@ -177,7 +177,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- end stickey -->
+                        <!-- end  -->
                     </div>
                 </div>
                 <!-- end row -->
@@ -223,6 +223,7 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
+    @endsection
 @section('script')
 
     {{-- Script for increment and decrement quantity --}}
@@ -230,25 +231,25 @@
         $(function() {
             $('.plus').click(function(e) {
                 e.preventDefault();
-                var input = $(this).siblings('.product-quantity');
-                var quantity = parseInt(input.val());
+                let input = $(this).siblings('.product-quantity');
+                let quantity = parseInt(input.val());
                 if (quantity < 15) {
                     quantity++;
                     input.val(quantity);
-                    var rowId = $(this).data('id');
+                    let rowId = $(this).data('id');
                     updateCart(rowId, quantity);
                 }
             });
 
             $('.minus').click(function(e) {
                 e.preventDefault();
-                var input = $(this).siblings('.product-quantity');
-                var quantity = parseInt(input.val());
+                let input = $(this).siblings('.product-quantity');
+                let quantity = parseInt(input.val());
 
                 if (quantity > 1) {
                     quantity--;
                     input.val(quantity);
-                    var rowId = $(this).data('id');
+                    let rowId = $(this).data('id');
                     updateCart(rowId, quantity);
                 }
             });
@@ -267,11 +268,11 @@
                 },
                 dataType: 'json',
                 success: function(response) {
-                    if (response.status == true) {
+                    if (response.status === true) {
                         localStorage.setItem("successMessage", response.message);
                         window.location.href = '{{ route('carts.details') }}';
                     }
-                    if (response.status == false) {
+                    if (response.status === false) {
                         localStorage.setItem("errorMessage", response.message);
                         window.location.href = '{{ route('carts.details') }}';
                     }
@@ -282,7 +283,7 @@
 
         function deleteItem(rowId) {
             $('#removeItemModal').modal('show');
-            $('#remove-cart-product').click(function(e) {
+            $('#remove-cart-product').click(function() {
                 $.ajax({
                     url: "{{ route('carts.item.delete') }}",
                     headers: {
@@ -294,12 +295,12 @@
                     },
                     dataType: 'json',
                     success: function(response) {
-                        if (response.status == true) {
+                        if (response.status === true) {
                             localStorage.setItem("successMessage", response.message);
                             $('#removeItemModal').modal('hide');
                             window.location.href = '{{ route('carts.details') }}';
                         }
-                        if (response.status == false) {
+                        if (response.status === false) {
                             localStorage.setItem("errorMessage", response.message);
                             window.location.href = '{{ route('carts.details') }}';
                         }
@@ -308,8 +309,8 @@
             })
         }
         $(document).ready(function() {
-            var errorMessage = localStorage.getItem('errorMessage');
-            var successMessage = localStorage.getItem('successMessage');
+            let errorMessage = localStorage.getItem('errorMessage');
+            let successMessage = localStorage.getItem('successMessage');
             if (errorMessage) {
                 showErrorToast(errorMessage);
                 localStorage.removeItem('errorMessage');
@@ -320,5 +321,4 @@
             }
         });
     </script>
-@endsection
 @endsection

@@ -1,6 +1,6 @@
 @extends('customer.layouts.app')
 @section('css')
-     <!-- Custom Card For Product - -->
+     /*Custom Card For Product */
      <link href="{{ asset('admin_asset/css/product-card.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 @section('container')

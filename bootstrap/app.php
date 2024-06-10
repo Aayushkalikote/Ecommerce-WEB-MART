@@ -11,6 +11,8 @@
 |
 */
 
+use Sentry\Laravel\Integration;
+
 $app = new Illuminate\Foundation\Application(
     $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
 );
@@ -39,6 +41,10 @@ $app->singleton(
 $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
     App\Exceptions\Handler::class
+);
+$app->singleton(
+    Illuminate\Contracts\Debug\ExceptionHandler::class,
+    Integration::class
 );
 
 /*

@@ -17,7 +17,8 @@
                     <div class="carousel-inner">
                         @foreach ($banners as $key => $banner)
                             <div class="carousel-item {{ $key === 0 ? 'active' : '' }}">
-                                <img src="{{ asset('uploads/banners/' . $banner->image) }}" class="d-block w-100"
+
+                                <img src="{{ asset('uploads/banners/' . $banner->image) }}" class="lazy d-block w-100"
                                      alt="...">
                                 <div class="carousel-caption d-none d-md-block">
                                     <div class="mb-4">
@@ -53,7 +54,7 @@
                             @foreach ($brands as $brand)
                                 <div class="col-md-3 mb-3 brand-card" data-brand="{{ $brand->slug }}">
                                     <div class="card">
-                                        <img class="card-img-top img-fluid"
+                                        <img class="lazy card-img-top img-fluid"
                                              src="{{ asset('uploads/brands/' . $brand->image) }}"
                                              alt="Brand Image" style="height: 130px; object-fit: cover;">
 
@@ -76,7 +77,7 @@
                                     <a href="{{ route('product.detail', $product->slug) }}" class="card-link">
 
                                         <div class="image-card" style="height: 200px; width: 280px;">
-                                            <img class="card-img-top img-fluid"
+                                            <img class="lazy card-img-top img-fluid"
                                                  src="{{ asset('uploads/products/' . $product->image[0]) }}" alt=""
                                                  style="height:100%; width:100%; object-fit: contain;">
                                         </div>
@@ -146,7 +147,7 @@
                                 <div class="col-sm-6 col-xl-3">
                                     <a href="{{ route('product.detail', $product->slug) }}" class="card-link">
                                         <div class="card card-product">
-                                            <img class="img-fluid d-block"
+                                            <img class="lazy img-fluid d-block"
                                                  src="{{ asset('uploads/products/' . $product->image[0]) }}"
                                                  alt="" style="height: 200px; object-fit: cover;">
                                             <div class="card-body">

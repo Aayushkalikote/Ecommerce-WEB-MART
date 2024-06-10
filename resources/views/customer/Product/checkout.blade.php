@@ -1,6 +1,6 @@
 @extends('customer.layouts.app')
 @section('css')
-    <!-- Custom Card For Product - -->
+    <!-- Custom Card For Product  -->
     <link href="{{ asset('admin_asset/css/product-card.css') }}" rel="stylesheet" type="text/css" />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
@@ -231,9 +231,9 @@
                                                             <input id="paymentMethod01" name="paymentMethod"
                                                                    type="radio" value="esewa" class="form-check-input">
                                                             <label class="form-check-label" for="paymentMethod01">
-                                                                <span class="fs-16 text-muted me-2"><img
+                                                                <span class="fs-16 text-muted me-2"><img alt="Esewa"
                                                                         src="{{ asset('admin_asset/images/logos/esewa.png') }}"
-                                                                        class="align-bottom" height="20px" width="20px"><span>
+                                                                        class="align-bottom" height="20px" width="20px"></span>
                                                                 <span class="fs-14 text-wrap">Esewa</span>
                                                             </label>
                                                         </div>
@@ -375,7 +375,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <h5 class="fs-14"><a href="apps-ecommerce-product-details.html"
+                                                    <h5 class="fs-14"><a href="{{ route('product.detail', $item->options->slug) }}"
                                                                          class="text-dark">{{ $item->name }} </a></h5>
                                                     <p class="text-muted mb-0">Quantity: ({{ $item->qty }})</p>
                                                 </td>
@@ -448,10 +448,10 @@
             $(document).ready(function () {
 
                 $('#province_id').change(function () {
-                    var provinceId = $(this).val();
+                    let provinceId = $(this).val();
                     if (provinceId) {
-                        var url = "{{ route('cities.get', ['id' => ':id']) }}";
-                        var urlWithId = url.replace(':id', provinceId);
+                        let url = "{{ route('cities.get', ['id' => ':id']) }}";
+                        let urlWithId = url.replace(':id', provinceId);
                         $.ajax({
                             type: "GET",
                             url: urlWithId,
@@ -485,7 +485,7 @@
         <script>
             $(document).ready(function () {
                 $('#save-information').click(function (e) {
-                    var data = $('#Billing-information-form').serializeArray();
+                    let data = $('#Billing-information-form').serializeArray();
                     $.ajax({
                         type: 'POST',
                         url: "{{ route('process.checkout.address') }}",
@@ -511,14 +511,14 @@
                             document.getElementById('addressError').style.display = "none";
                             if (error.responseJSON.errors) {
                                 if (error.responseJSON.errors.full_name) {
-                                    var errMsg = document.getElementById('FullNameError');
+                                    let errMsg = document.getElementById('FullNameError');
                                     if (error.responseJSON.errors.full_name[0]) {
                                         errMsg.style.display = "block";
                                         errMsg.textContent = error.responseJSON.errors.full_name[0];
                                     }
                                 }
                                 if (error.responseJSON.errors.email) {
-                                    var errMsg = document.getElementById('EmailError');
+                                    let errMsg = document.getElementById('EmailError');
                                     if (error.responseJSON.errors.email[0]) {
                                         errMsg.style.display = "block";
                                         errMsg.textContent = error.responseJSON.errors.email[
@@ -526,7 +526,7 @@
                                     }
                                 }
                                 if (error.responseJSON.errors.province_id) {
-                                    var errMsg = document.getElementById('ProvinceError');
+                                    let errMsg = document.getElementById('ProvinceError');
                                     if (error.responseJSON.errors.province_id[0]) {
                                         errMsg.style.display = "block";
                                         errMsg.textContent = error.responseJSON.errors.province_id[
@@ -534,21 +534,21 @@
                                     }
                                 }
                                 if (error.responseJSON.errors.city_id) {
-                                    var errMsg = document.getElementById('CityError');
+                                    let errMsg = document.getElementById('CityError');
                                     if (error.responseJSON.errors.city_id[0]) {
                                         errMsg.style.display = "block";
                                         errMsg.textContent = error.responseJSON.errors.city_id[0];
                                     }
                                 }
                                 if (error.responseJSON.errors.phone) {
-                                    var errMsg = document.getElementById('mobileError');
+                                    let errMsg = document.getElementById('mobileError');
                                     if (error.responseJSON.errors.phone[0]) {
                                         errMsg.style.display = "block";
                                         errMsg.textContent = error.responseJSON.errors.phone[0];
                                     }
                                 }
                                 if (error.responseJSON.errors.address) {
-                                    var errMsg = document.getElementById('addressError');
+                                    let errMsg = document.getElementById('addressError');
                                     if (error.responseJSON.errors.address[0]) {
                                         errMsg.style.display = "block";
                                         errMsg.textContent = error.responseJSON.errors.address[0];
@@ -567,7 +567,7 @@
         <script>
             $(document).ready(function () {
                 $('#order_complete').click(function (e) {
-                    var data = $('#Billing-information-form').serializeArray();
+                    let data = $('#Billing-information-form').serializeArray();
                     $.ajax({
                         type: 'POST',
                         url: "{{ route('process.checkout.payment') }}",
@@ -577,13 +577,13 @@
                         data: data,
                         success: function (response) {
                             $('#order_complete').prop('disabled', true);
-                            if (response.status == true && response.type == 'esewa') {
+                            if (response.status === true && response.type === 'esewa') {
                                 window.location.href = response.url;
                             }
                             showToast(response.message);
 
                             // Switch to the next tab
-                            if (!response.errors && response.status == true && response.type == 'cod') {
+                            if (!response.errors && response.status === true && response.type === 'cod') {
                                 $('#coupon-div').hide();
                                 $('#pills-finish-tab').removeAttr('disabled');
                                 $('#pills-finish-tab').tab('show');
@@ -593,7 +593,7 @@
                                 $("#discount-response-wrapper").html('');
                                 $("#discount_code").val('');
                             }
-                            if (!response.errors && response.status == false) {
+                            if (!response.errors && response.status === false) {
                                 $('#order_complete').prop('disabled', false);
 
                                 $('#payment_message_vald').html(response.message);
@@ -628,7 +628,7 @@
                         },
                         dataType: 'json',
                         success: function (response) {
-                            if (response.status == true) {
+                            if (response.status === true) {
                                 console.log('here');
                                 $("#shippingAmount").html('Rs ' + response.shippingCharge);
                                 $("#grandTotal").html('Rs ' + response.grandTotal);
@@ -660,14 +660,14 @@
                             cities_id: $("#cities_id").val()
                         },
                         success: function (response) {
-                            if (response.status == true) {
+                            if (response.status === true) {
                                 showToast('Discount Coupon added succesfully');
                                 $("#shippingAmount").html('Rs ' + response.shippingCharge);
                                 $("#grandTotal").html('Rs ' + response.grandTotal);
                                 $("#discount_value").html('-Rs ' + response.discount);
                                 $("#discount-response-wrapper").html(response.discountString);
                             }
-                            if (response.status == false) {
+                            if (response.status === false) {
                                 showErrorToast(response.message);
                             }
                         }
@@ -686,7 +686,7 @@
                             cities_id: $("#cities_id").val()
                         },
                         success: function (response) {
-                            if (response.status == true) {
+                            if (response.status === true) {
                                 showToast('Discount coupon Removed Succesfully');
                                 $("#shippingAmount").html('Rs ' + response
                                     .shippingCharge);
@@ -695,7 +695,7 @@
                                 $("#discount-response-wrapper").html('');
                                 $("#discount_code").val('');
                             }
-                            if (response.status == false) {
+                            if (response.status === false) {
                                 showErrorToast(response.message);
                             }
                         }

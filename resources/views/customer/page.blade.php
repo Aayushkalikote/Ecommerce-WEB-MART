@@ -48,7 +48,7 @@
                                         width="1440" height="60" preserveAspectRatio="none" viewBox="0 0 1440 60">
                                         <g mask="url(&quot;#SvgjsMask1001&quot;)" fill="none">
                                             <path d="M 0,4 C 144,13 432,48 720,49 C 1008,50 1296,17 1440,9L1440 60L0 60z"
-                                                style="fill: var(--vz-card-bg-custom);"></path>
+                                                style="fill: let(--vz-card-bg-custom);"></path>
                                         </g>
                                         <defs>
                                             <mask id="SvgjsMask1001">
@@ -120,8 +120,8 @@
     $(document).ready(function() {
         $('#contactForm').submit(function(event) {
             event.preventDefault();
-            var form = $(this);
-            var formData = form.serialize();
+            let form = $(this);
+            let formData = form.serialize();
             $.ajax({
                 url: "{{ route('sendContactEmail') }}",
                 type: 'post',
@@ -131,7 +131,7 @@
                 data: formData,
                 dataType: 'json',
                 success: function(response) {
-                    if (response.status == true) {
+                    if (response.status === true) {
                         localStorage.setItem("successMessage", response.message);
                         window.location.reload();
                         }
@@ -142,7 +142,7 @@
                     document.getElementById('SubjectError').style.display = "none";
                     document.getElementById('MessageError').style.display = "none";
                     if (error.responseJSON.errors.name) {
-                        var errMsg = document.getElementById('NameError');
+                        let errMsg = document.getElementById('NameError');
                         if (error.responseJSON.errors.name[0]) {
 
                             errMsg.style.display = "block";
@@ -150,7 +150,7 @@
                         }
                     }
                     if (error.responseJSON.errors.email) {
-                        var errMsg = document.getElementById('EmailError');
+                        let errMsg = document.getElementById('EmailError');
                         if (error.responseJSON.errors.email[0]) {
 
                             errMsg.style.display = "block";
@@ -158,7 +158,7 @@
                         }
                     }
                     if (error.responseJSON.errors.subject) {
-                        var errMsg = document.getElementById('SubjectError');
+                        let errMsg = document.getElementById('SubjectError');
                         if (error.responseJSON.errors.subject[0]) {
 
                             errMsg.style.display = "block";
@@ -166,7 +166,7 @@
                         }
                     }
                     if (error.responseJSON.errors.message) {
-                        var errMsg = document.getElementById('MessageError');
+                        let errMsg = document.getElementById('MessageError');
                         if (error.responseJSON.errors.message[0]) {
 
                             errMsg.style.display = "block";
@@ -180,8 +180,8 @@
 </script>
 <script>
     $(document).ready(function() {
-        var errorMessage = localStorage.getItem('errorMessage');
-        var successMessage = localStorage.getItem('successMessage');
+        let errorMessage = localStorage.getItem('errorMessage');
+        let successMessage = localStorage.getItem('successMessage');
         if (errorMessage) {
             showErrorToast(errorMessage);
             localStorage.removeItem('errorMessage');

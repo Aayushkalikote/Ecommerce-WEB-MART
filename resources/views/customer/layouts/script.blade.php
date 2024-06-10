@@ -7,11 +7,26 @@
  <!-- include jQuery library -->
  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.11/jquery.lazy.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
-
+<script>
+    $(document).ready(function () {
+        // Lazy load images
+        $('.lazy').Lazy({
+            // your configuration goes here
+            scrollDirection: 'vertical',
+            effect: 'fadeIn',
+            visibleOnly: true,
+            onError: function(element) {
+                console.log('error loading ' + element.data('src'));
+            }
+        });
+    });
+</script>
  <script>
+
     function addToCart(id) {
         $.ajax({
             url: '{{ route("carts.add") }}',

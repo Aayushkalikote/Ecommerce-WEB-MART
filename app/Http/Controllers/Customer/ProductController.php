@@ -30,7 +30,6 @@ class ProductController extends Controller
         $avgRating = number_format(($product->product_ratings_sum_rating / $product->product_ratings_count), 2);
         $avgRatingPer = ($avgRating * 100) / 5;
     }
-    // dd($product);
     return view('customer.Product.details', compact('product', 'avgRatingPer', 'avgRating'));
 }
 
@@ -42,6 +41,7 @@ class ProductController extends Controller
             'username' => ['required', 'min:5', 'max:20'],
             'email' => ['required', 'email'],
             'rating' => ['required', 'numeric', 'between:0,10'],
+            'status' => 1,
             'comment' => ['required'],
         ]);
 

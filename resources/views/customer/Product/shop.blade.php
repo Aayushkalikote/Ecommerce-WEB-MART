@@ -105,7 +105,7 @@
                                                 </div>
                                                 <div class="card-body">
                                                     <h1 class="card-title mb-2 fs-20">{{ $product->name }}</h1>
-                                                    <p class="card-text price">
+                                                    <div class="card-text price">
                                                     @if ($product->discount)
                                                         <h5>
                                                                 <span class="text-danger">
@@ -123,7 +123,7 @@
                                                                 Rs. {{ $product->price ?? ' ' }}
                                                         </span>
                                                         @endif
-                                                        </p>
+                                                        </div>
                                                 </div>
                                                 @if ($product->stock > 0)
                                                     <div class="add-to-cart-btn">
@@ -192,24 +192,24 @@
                 apply_filters()
             }
         });
-        var slider = $(".js-range-slider").data("ionRangeSlider")
+        let slider = $(".js-range-slider").data("ionRangeSlider")
 
         function apply_filters() {
-            var brands = [];
+            let brands = [];
             $(".brand-label").each(function () {
-                if ($(this).is(":checked") == true) {
+                if ($(this).is(":checked") === true) {
                     brands.push($(this).val());
                 }
             });
             //Brands Filter
             console.log(brands.toString())
-            var url = '{{ url()->current() }}?';
+            let url = '{{ url()->current() }}?';
 
             //Price Range Filter
             url += '&price_min=' + slider.result.from + '&price_max=' + slider.result.to;
 
             //Sorting filter
-            var keyword = $("#search-options").val();
+            let keyword = $("#search-options").val();
             if (keyword.length > 0) {
                 url += '&search=' + keyword;
 

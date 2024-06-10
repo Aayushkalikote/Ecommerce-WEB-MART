@@ -127,15 +127,6 @@
                                                 </div>
                                                 <button type="button" class="btn btn-light me-2"
                                                         id="product_share_button"><i class="ri-share-line"></i></button>
-                                                @role(['Admin', 'Super Admin'])
-                                                <div class="flex-shrink-0">
-                                                    <div>
-                                                        <a href="#" class="btn btn-light"
-                                                           data-bs-toggle="tooltip" data-bs-placement="top"
-                                                           title="Edit"><i class="ri-pencil-fill align-bottom"></i></a>
-                                                    </div>
-                                                </div>
-                                                @endrole
                                             </div>
 
 
@@ -667,21 +658,21 @@
                             }
 
                             if (error.responseJSON.errors.email) {
-                                var errMsg = document.getElementById('EmailError');
+                                let errMsg = document.getElementById('EmailError');
                                 if (error.responseJSON.errors.email[0]) {
                                     errMsg.style.display = "block";
                                     errMsg.textContent = error.responseJSON.errors.email[0];
                                 }
                             }
                             if (error.responseJSON.errors.rating) {
-                                var errMsg = document.getElementById('RatingError');
+                                let errMsg = document.getElementById('RatingError');
                                 if (error.responseJSON.errors.rating[0]) {
                                     errMsg.style.display = "block";
                                     errMsg.textContent = error.responseJSON.errors.rating[0];
                                 }
                             }
                             if (error.responseJSON.errors.comment) {
-                                var errMsg = document.getElementById('commentError');
+                                let errMsg = document.getElementById('commentError');
                                 if (error.responseJSON.errors.comment[0]) {
                                     errMsg.style.display = "block";
                                     errMsg.textContent = error.responseJSON.errors.comment[0];
@@ -695,8 +686,8 @@
     </script>
     <script>
         $(document).ready(function () {
-            var errorMessage = localStorage.getItem('errorMessage');
-            var successMessage = localStorage.getItem('successMessage');
+            let errorMessage = localStorage.getItem('errorMessage');
+            let successMessage = localStorage.getItem('successMessage');
             if (errorMessage) {
                 showErrorToast(errorMessage);
                 localStorage.removeItem('errorMessage');

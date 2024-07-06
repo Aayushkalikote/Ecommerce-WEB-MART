@@ -85,3 +85,7 @@ Route::prefix('Product')->name('product.')->group(function () {
     Route::get('{slug}', [ProductController::class, 'productDetail'])->name('detail');
     Route::post('rating-submit', [ProductController::class, 'storeReview'])->name('ratingSubmit');
 });
+
+Route::get('/debug-sentry', function () {
+    throw new Exception('My first Sentry error!');
+});

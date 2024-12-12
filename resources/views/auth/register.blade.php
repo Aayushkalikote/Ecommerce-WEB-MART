@@ -47,7 +47,7 @@
 
                                         <div class="mb-3">
                                             <label>Name <span class="text-danger">*</span></label>
-                                            <input id="username" type="text"
+                                            <input id="name" type="text"
                                                 class="form-control @error('name') is-invalid @enderror" name="name"
                                                 value="{{ old('name') }}" autocomplete="name" placeholder="name">
                                             @error('name')

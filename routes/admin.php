@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 
 
 Auth::routes();
-Route::prefix('admin')->name('admin.')->middleware(['auth:web','role:Super Admin||Admin'])->group(function () {
+Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('dashboard', [DashboardController::class,  'index'])->name('dashboard');
 
     //--------------------------------------Route for Users--------------------------------------------------------//

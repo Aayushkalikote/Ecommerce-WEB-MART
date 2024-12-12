@@ -46,7 +46,7 @@
                         <div class="col-sm-6">
                             <div class="mb-3">
                                 <label for="name">Full Name<span class="ms-1 text-danger">*</span></label>
-                                <input type="text" value="{{ $customerAddress->full_name }}" name="full_name"
+                                <input type="text" value="{{ $customerAddress->full_name ?? '' }}" name="full_name"
                                     placeholder="Enter your Full Name" class="form-control">
                                 <div class="invalid-feedback" id="FullNameError"></div>
 
@@ -56,7 +56,7 @@
 
                             <div class="mb-3">
                                 <label for="email">Email</label>
-                                <input type="text" value="{{ $customerAddress->email }}" name="email"
+                                <input type="text" value="{{ $customerAddress->email ?? '' }}" name="email"
                                     placeholder="Enter your Email" class="form-control">
                                 <div class="invalid-feedback" id="AddressEmailError"></div>
 
@@ -67,7 +67,7 @@
                         <div class="col-sm-6">
                             <div class="mb-3">
                                 <label for="phone">Phone<span class="ms-1 text-danger">*</span></label>
-                                <input type="text" value="{{ $customerAddress->phone }}" name="phone"
+                                <input type="text" value="{{ $customerAddress->phone ?? '' }}" name="phone"
                                     placeholder="Enter your phone" class="form-control">
                                 <div class="invalid-feedback" id="PhoneNumberError"></div>
 

@@ -9,9 +9,8 @@
 
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ asset('admin_asset/images/logos/webmart-dark.png') }}">
-      <!-- Filepond Css -->
-      <link rel="stylesheet" href="{{ asset('admin_asset/libs/filepond/filepond.min.css') }}" type="text/css" />
-      <link rel="stylesheet" href="{{ asset('admin_asset/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.css') }}">
+    @yield('css')
+
 
     <!-- Layout config Js -->
     <script src="{{ asset('admin_asset/js/layout.js') }}"></script>

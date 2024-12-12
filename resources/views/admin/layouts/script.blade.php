@@ -10,19 +10,7 @@
 <!-- App js -->
 <script src="{{ asset('admin_asset/js/app.js') }}"></script>
 
-<!-- filepond js -->
 
-<script src="{{ asset('admin_asset/libs/filepond/filepond.min.js') }}"></script>
-<script src="{{ asset('admin_asset/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.js') }}">
-</script>
-<script
-    src="{{ asset('admin_asset/libs/filepond-plugin-file-validate-size/filepond-plugin-file-validate-size.min.js') }}">
-    </script>
-<script
-    src="{{ asset('admin_asset/libs/filepond-plugin-image-exif-orientation/filepond-plugin-image-exif-orientation.min.js') }}">
-    </script>
-<script src="{{ asset('admin_asset/libs/filepond-plugin-file-encode/filepond-plugin-file-encode.min.js') }}"></script>
-<script src="{{ asset('admin_asset/js/pages/form-file-upload.init.js') }}"></script>
 <!-- include jQuery library -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
 <script src="{{ asset('admin_asset/js/pages/datatables.init.js') }}"></script>
@@ -40,3 +28,5 @@
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
+<!-- Select2 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
